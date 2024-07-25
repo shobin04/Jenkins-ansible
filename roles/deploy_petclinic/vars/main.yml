@@ -1,0 +1,4 @@
+---
+war_file: petclinic.war
+tomcat_service: tomcat
+

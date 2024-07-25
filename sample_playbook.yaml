@@ -1,0 +1,7 @@
+---
+- name: deploy petclinic
+  hosts: webservers
+  become: yes
+  roles:
+    - deploy_petclinic
+

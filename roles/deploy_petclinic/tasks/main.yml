@@ -1,0 +1,14 @@
+---
+- name: Copy PetClinic WAR to Tomcat webapps
+  copy:
+    src: /var/lib/jenkins/workspace/Petclinic-demo/target/petclinic.war
+    dest: /opt/tomcat/webapps/
+    owner: tomcat
+    group: tomcat
+    mode: '0644'
+
+- name: Restart Tomcat
+  systemd:
+    name: tomcat
+    state: restarted
+
