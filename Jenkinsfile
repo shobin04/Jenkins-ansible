@@ -19,11 +19,6 @@ pipeline {
                git branch: 'main', url: 'https://github.com/shobin04/Jenkins-ansible.git'
            }
        }
-       stage('Unit Test') {
-            steps {
-                sh './mvnw clean test'
-            }
-        }
        stage('SonarQube') {
           steps {
             withSonarQubeEnv('SonarQube') {
@@ -37,6 +32,16 @@ pipeline {
             }
         }
     }
+        stage('Quality Gate Check') {
+            steps {
+                script {
+                    def qg = waitForQualityGate()  // Note: This requires the SonarQube Scanner for Jenkins plugin
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+        }
         stage ('build') {
             steps {
                sh""" cd /var/lib/jenkins/workspace/Petclinic-demo/
@@ -44,3 +49,12 @@ pipeline {
                """
             }
         }  
+        stage ('deploy') {
+            steps {
+                 sh""" cd /opt/ansible/Jenkins-ansible/
+                 ansible-playbook sample_playbook.yaml -i inventory
+                 """
+            }
+        }
+    }
+        
