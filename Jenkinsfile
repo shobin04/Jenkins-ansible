@@ -22,7 +22,7 @@ pipeline {
        stage('SonarQube') {
           steps {
             withSonarQubeEnv('SonarQube') {
-                sh '''
+                sh ''' cd /var/lib/jenkins/workspace/Petclinic-demo/
                 mvn clean verify sonar:sonar \
                -Dsonar.projectKey=ansible \
                -Dsonar.projectName='ansible' \
