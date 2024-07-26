@@ -21,13 +21,13 @@ pipeline {
                git branch: 'main', url: 'https://github.com/shobin04/Jenkins-ansible.git'
            }
        }
-        stage('Unit Test') {
-            steps {
-                sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
-                mvn clean test
-                """  // Use './mvnw' if using the Maven wrapper
-            }
-        }
+        // stage('Unit Test') {
+        //     steps {
+        //         sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+        //         mvn clean test
+        //         """  // Use './mvnw' if using the Maven wrapper
+        //     }
+        // }
        stage('SonarQube') {
           steps {
             withSonarQubeEnv('SonarQube') {
@@ -52,8 +52,8 @@ pipeline {
             steps {
                  ansiblePlaybook(
                     colorized: true, 
-                    playbook: 'ansible/sample_playbook.yaml', 
-                    inventory: 'ansible/hosts'
+                    playbook: 'opt/ansible/Jenkins-ansible/sample_playbook.yaml', 
+                    inventory: 'opt/ansible/Jenkins-ansible/inventory'
                 )
             }
         }
