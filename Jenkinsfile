@@ -23,13 +23,15 @@ pipeline {
        }
         stage('Unit Test') {
             steps {
-                sh 'mvn clean test'  // Use './mvnw' if using the Maven wrapper
+                sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+                mvn clean test
+                """  // Use './mvnw' if using the Maven wrapper
             }
         }
        stage('SonarQube') {
           steps {
             withSonarQubeEnv('SonarQube') {
-                sh ''' 
+                sh ''' cd /var/lib/jenkins/workspace/Petclinic-demo/
                 mvn clean verify sonar:sonar \
                -Dsonar.projectKey=ansible-jenkins \
                -Dsonar.projectName='ansible-jenkins' \
@@ -51,10 +53,12 @@ pipeline {
         }
         stage ('build') {
             steps {
-               sh 'mvn package'
+               sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+                mvn package
+                """
             }
         }  
-        stage ('deploy') {
+        stage ('deploy using ansible') {
             steps {
                  sh 'ansiblePlaybook colorized: true, playbook: "${ANSIBLE_PLAYBOOK}", inventory: "${ANSIBLE_INVENTORY}"'
             }
