@@ -50,6 +50,7 @@ pipeline {
         stage ('deploy using ansible') {
             steps {
                  sh """ cd /var/lib/jenkins/workspace/Ansible-petclinic-deploy/
+                 chmod 400 ansible.pem
                  ansible-playbook sample_playbook.yaml -i inventory
                  """
             }
