@@ -4,6 +4,7 @@ pipeline {
     environment {
             SONAR_RUNNER_HOME = tool 'SonarQube'
             PROJECT_NAME = "ansible-jenkins"
+            ANSIBLE_HOST_KEY_CHECKING = 'False'
            }
     tools {
         maven 'maven'
