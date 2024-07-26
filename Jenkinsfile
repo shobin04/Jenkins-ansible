@@ -4,8 +4,6 @@ pipeline {
     environment {
             SONAR_RUNNER_HOME = tool 'SonarQube'
             PROJECT_NAME = "ansible-jenkins"
-            ANSIBLE_PLAYBOOK = 'ansible/sample_playbook.yaml'
-            ANSIBLE_INVENTORY = 'ansible/hosts'
            }
     tools {
         maven 'maven'
@@ -51,7 +49,6 @@ pipeline {
         stage ('deploy using ansible') {
             steps {
                  sh """ cd /var/lib/jenkins/workspace/Ansible-petclinic-deploy/
-                 ansible -m ping all -i inventory \
                  ansible-playbook sample_playbook.yaml -i inventory
                  """
             }
