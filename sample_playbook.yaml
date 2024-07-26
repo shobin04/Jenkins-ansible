@@ -1,6 +1,6 @@
 ---
 - name: deploy petclinic
-  hosts: webservers
+  hosts: web-server
   become: yes
   roles:
     - deploy_petclinic
