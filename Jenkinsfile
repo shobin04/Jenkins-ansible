@@ -50,7 +50,11 @@ pipeline {
         }  
         stage ('deploy using ansible') {
             steps {
-                 sh 'ansiblePlaybook colorized: true, playbook: "${ANSIBLE_PLAYBOOK}", inventory: "${ANSIBLE_INVENTORY}"'
+                 ansiblePlaybook(
+                    colorized: true, 
+                    playbook: 'ansible/sample_playbook.yaml', 
+                    inventory: 'ansible/hosts'
+                )
             }
         }
     }
