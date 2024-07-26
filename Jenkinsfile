@@ -51,12 +51,12 @@ pipeline {
         }
         stage ('build') {
             steps {
-               sh mvn package
+               sh 'mvn package'
             }
         }  
         stage ('deploy') {
             steps {
-                 sh ansiblePlaybook colorized: true, playbook: "${ANSIBLE_PLAYBOOK}", inventory: "${ANSIBLE_INVENTORY}"
+                 sh 'ansiblePlaybook colorized: true, playbook: "${ANSIBLE_PLAYBOOK}", inventory: "${ANSIBLE_INVENTORY}"'
             }
         }
     }
