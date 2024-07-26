@@ -28,26 +28,26 @@ pipeline {
         //         """  // Use './mvnw' if using the Maven wrapper
         //     }
         // }
-       stage('SonarQube') {
-          steps {
-            withSonarQubeEnv('SonarQube') {
-                sh ''' cd /var/lib/jenkins/workspace/Petclinic-demo/
-                mvn clean verify sonar:sonar \
-               -Dsonar.projectKey=ansible-jenkins \
-               -Dsonar.projectName='ansible-jenkins' \
-               -Dsonar.host.url=http://3.95.216.80:9000 \
-               -Dsonar.token=sqp_ee21b6e3a8c4fd568e5272e5b393302ab7321cb2
-              '''
-            }
-        }
-    }
-        stage ('build') {
-            steps {
-               sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
-                mvn package
-                """
-            }
-        }  
+    //    stage('SonarQube') {
+    //       steps {
+    //         withSonarQubeEnv('SonarQube') {
+    //             sh ''' cd /var/lib/jenkins/workspace/Petclinic-demo/
+    //             mvn clean verify sonar:sonar \
+    //            -Dsonar.projectKey=ansible-jenkins \
+    //            -Dsonar.projectName='ansible-jenkins' \
+    //            -Dsonar.host.url=http://3.95.216.80:9000 \
+    //            -Dsonar.token=sqp_ee21b6e3a8c4fd568e5272e5b393302ab7321cb2
+    //           '''
+    //         }
+    //     }
+    // }
+    //     stage ('build') {
+    //         steps {
+    //            sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+    //             mvn package
+    //             """
+    //         }
+    //     }  
         stage ('deploy using ansible') {
             steps {
                  ansiblePlaybook(
