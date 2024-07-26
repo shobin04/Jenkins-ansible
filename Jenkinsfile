@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
                 ./zap.sh -daemon -config api.disablekey=true -newsession -sessionPath session -config globalexcludeurl.url_list.url(0).regex=".*(test-1|test-2).*"
-                zap-cli quick-scan --self-contained http://localhost:8080
+                zap-cli quick-scan --self-contained http://44.203.154.48:8080
                 zap-cli report -o zap-report.html -f html
                 """
             }
