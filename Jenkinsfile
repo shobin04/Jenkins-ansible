@@ -52,8 +52,8 @@ pipeline {
             steps {
                  ansiblePlaybook(
                     colorized: true, 
-                    playbook: 'opt/ansible/Jenkins-ansible/sample_playbook.yaml', 
-                    inventory: 'opt/ansible/Jenkins-ansible/inventory'
+                    playbook: '/opt/ansible/Jenkins-ansible/sample_playbook.yaml', 
+                    inventory: '/opt/ansible/Jenkins-ansible/inventory'
                 )
             }
         }
