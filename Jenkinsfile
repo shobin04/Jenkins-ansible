@@ -50,10 +50,10 @@ pipeline {
     //     }  
         stage ('deploy using ansible') {
             steps {
-                 ansiblePlaybook(
-                    colorized: true, 
-                    playbook: '/var/lib/jenkins/workspace/Ansible-petclinic-deploy/sample_playbook.yaml', 
-                    inventory: '/var/lib/jenkins/workspace/Ansible-petclinic-deploy/inventory'
+                 sh """ cd /var/lib/jenkins/workspace/Ansible-petclinic-deploy/
+                 ansible -m ping all -i inventory \
+                 ansible-playbook sample_playbook.yaml -i inventory
+                 """
                 )
             }
         }
