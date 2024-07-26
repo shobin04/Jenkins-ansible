@@ -57,22 +57,18 @@ pipeline {
         }
         stage('Security Test') {
             steps {
-                sh """ 
-                #!/bin/bash
-                cd /var/lib/jenkins/workspace/Petclinic-demo/
-                ./zap.sh -daemon -config api.disablekey=true -newsession -sessionPath session -config globalexcludeurl.url_list.url(0).regex=".*(test-1|test-2).*" \
-                zap-cli quick-scan --self-contained http://localhost:8080 \
-                zap-cli report -o zap-report.html -f html \
+                sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+                ./zap.sh -daemon -config api.disablekey=true -newsession -sessionPath session -config globalexcludeurl.url_list.url(0).regex=".*(test-1|test-2).*"
+                zap-cli quick-scan --self-contained http://localhost:8080
+                zap-cli report -o zap-report.html -f html
                 """
             }
         }
         stage('Performance Testing') {
             steps {
-                sh """
-                #!/bin/bash
-                cd /var/lib/jenkins/workspace/Petclinic-demo/
-                jmeter -n -t petclinic_test_plan.jmx -l results.jtl \
-                sh 'jmeter -g results.jtl -o jmeter-report \
+                sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
+                jmeter -n -t petclinic_test_plan.jmx -l results.jtl
+                jmeter -g results.jtl -o jmeter-report
                 """
             }
         }
