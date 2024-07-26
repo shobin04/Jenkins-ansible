@@ -54,7 +54,6 @@ pipeline {
                  ansible -m ping all -i inventory \
                  ansible-playbook sample_playbook.yaml -i inventory
                  """
-                )
             }
         }
         stage('Security Test') {
