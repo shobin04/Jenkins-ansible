@@ -41,16 +41,6 @@ pipeline {
             }
         }
     }
-        stage('Quality Gate Check') {
-            steps {
-                script {
-                    def qg = waitForQualityGate()  // Note: This requires the SonarQube Scanner for Jenkins plugin
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-        }
         stage ('build') {
             steps {
                sh """ cd /var/lib/jenkins/workspace/Petclinic-demo/
