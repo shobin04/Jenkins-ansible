@@ -3,7 +3,7 @@ pipeline {
     
     environment {
             SONAR_RUNNER_HOME = tool 'SonarQube'
-            PROJECT_NAME = "ansible"
+            PROJECT_NAME = "ansible-jenkins"
            }
     tools {
         maven 'maven'
@@ -19,15 +19,20 @@ pipeline {
                git branch: 'main', url: 'https://github.com/shobin04/Jenkins-ansible.git'
            }
        }
+        stage('Unit Test') {
+            steps {
+                sh 'mvn clean test'  // Use './mvnw' if using the Maven wrapper
+            }
+        }
        stage('SonarQube') {
           steps {
             withSonarQubeEnv('SonarQube') {
-                sh ''' cd /var/lib/jenkins/workspace/Petclinic-demo/
+                sh ''' 
                 mvn clean verify sonar:sonar \
-               -Dsonar.projectKey=ansible \
-               -Dsonar.projectName='ansible' \
-               -Dsonar.host.url=http://54.227.47.234:9000 \
-               -Dsonar.token=sqp_155caf8788135eacef28b1f29f54967c309d6190
+               -Dsonar.projectKey=ansible-jenkins \
+               -Dsonar.projectName='ansible-jenkins' \
+               -Dsonar.host.url=http://3.95.216.80:9000 \
+               -Dsonar.token=sqp_ee21b6e3a8c4fd568e5272e5b393302ab7321cb2
               '''
             }
         }
@@ -44,16 +49,16 @@ pipeline {
         }
         stage ('build') {
             steps {
-               sh""" cd /var/lib/jenkins/workspace/Petclinic-demo/
+               sh"
                mvn package
-               """
+               "
             }
         }  
         stage ('deploy') {
             steps {
-                 sh""" cd /opt/ansible/Jenkins-ansible/
-                 ansible-playbook sample_playbook.yaml -i inventory
-                 """
+                 sh"
+                 ansiblePlaybook colorized: true, playbook: "${ANSIBLE_PLAYBOOK}", inventory: "${ANSIBLE_INVENTORY}"
+                 "
             }
         }
     }
